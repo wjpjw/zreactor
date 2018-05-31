@@ -7,8 +7,8 @@
 
 #include "zreactor.h"
 #include "../src/ThreadPool.h"
-#include "../src/SimpleRouterSocket.h"
-#include "../src/RouterSocket.h"
+#include "../src/cosignor.h"
+#include "../src/liaison.h"
 #include "../src/RouterPoller.h"
 
 #endif //DO_NOT_YARN_ZAPI_H

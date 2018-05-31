@@ -2,7 +2,7 @@
 // Created by jipeng on 5/28/18.
 //
 
-#include "SimpleRouterSocket.h"
+#include "cosignor.h"
 
 SimpleRouterSocket::SimpleRouterSocket(Context& context, int port)
         :socket(context, ZMQ_ROUTER), port(port)

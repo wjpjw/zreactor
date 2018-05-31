@@ -3,8 +3,8 @@
 //
 
 #include "RouterPoller.h"
-#include "RouterSocket.h"
-#include "SimpleRouterSocket.h"
+#include "liaison.h"
+#include "cosignor.h"
 
 RouterPoller::RouterPoller(int port, Callback callback, int timeout_millisec, int nr_iothreads, int nr_workerthreads)
         :timeout_millisec(timeout_millisec),

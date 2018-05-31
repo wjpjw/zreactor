@@ -6,8 +6,8 @@
 #define DO_NOT_YARN_ZAPI_H
 
 #include "zreactor.h"
-#include "util/ThreadPool.h"
-#include "util/Message.h"
+#include "util/threadpool.h"
+#include "util/message.h"
 
 
 #endif //DO_NOT_YARN_ZAPI_H
