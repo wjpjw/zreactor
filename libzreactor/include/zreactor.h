@@ -8,6 +8,7 @@
 #include <zmq.hpp>
 #include <sys/time.h>
 #include <time.h>
+#include <iostream>
 
 /* linux high resolution sleep */
 static inline void linux_sleep_msecs(int msecs) {
