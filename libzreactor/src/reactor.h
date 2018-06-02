@@ -5,6 +5,7 @@
 #ifndef DO_NOT_YARN_POLLERSERVER_H
 #define DO_NOT_YARN_POLLERSERVER_H
 #include "zreactor.h"
+#include "util/message.h"
 
 /*
     这个头文件是整个数据库访问代理核心层中唯一暴露给用户的公开接口。

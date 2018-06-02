@@ -11,7 +11,7 @@ using namespace wjp;
 
 liaison::liaison(zmq::context_t& context, const std::string& port, callback cb, int nr_threads)
         :router_socket(context),
-         factory_(std::make_unique<factory>(nr_threads, cb)),
+         factory_(std::make_unique<factory>(nr_threads, cb, context)),
          context_(context)
 {
     bind_tcp(port);

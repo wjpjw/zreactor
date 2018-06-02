@@ -62,6 +62,15 @@
 3. wjp::consignor（交付人）
 
     consignor负责协调liaison和内部的核心工作组件factory。
+
+        factory到consignor的dealer-router模式中的通信协议是自定义的。
+        消息格式如下：
+        |-- dealer_addr --|
+        |-- client addr --|
+        |--   result    --|
+       
+    其中dealer_addr用不到，client addr和result都转交给liaison即可发回给客户端。    
+
     
 4. wjp::factory（多线程消息处理工厂） 
     

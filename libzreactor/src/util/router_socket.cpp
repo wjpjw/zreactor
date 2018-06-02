@@ -75,9 +75,16 @@ void router_socket::recv_from_dealer(message &addr, message &content)
     content.recv(socket_);
 }
 
-/* 设置自身的addr */
+/* 设置自身的addr，如果非要用router-router模式的话 */
 void router_socket::set_addr(const std::string& myaddr)
 {
     socket_.setsockopt(ZMQ_IDENTITY, myaddr.c_str(), myaddr.length());
 }
 
+message router_socket::recv_from_dealer_content_only()
+{
+    message tmp;
+    tmp.recv(socket_);  //不关心addr
+    tmp.recv(socket_);  //只取content
+    return tmp;
+}

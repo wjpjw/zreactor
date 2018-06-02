@@ -24,6 +24,7 @@ namespace wjp{
         void recv_from_router(message& addr, message& content);
         void send_to_router(message addr, message content);
         void recv_from_dealer(message& addr, message& content);
+        message recv_from_dealer_content_only();
         void send_to_dealer(message addr, message content);
         void bind_tcp(const std::string& port);
         void bind_inproc(const std::string& identifier);

@@ -15,13 +15,13 @@
     每当factory内的工作线程向它发送处理完的消息，它就把这个消息递交给liaison，让liaison再发回到客户端。
  */
 namespace wjp {
-    class consignor {
+    class liaison;
+    class consignor : public router_socket {
     public:
-        inline operator void *() noexcept { return socket_; }
-        consignor(zmq::context_t& context, const std::string& identifier);
-        void on_response_msg_arrival();
+        consignor(zmq::context_t&, const std::string&, liaison&);
+        void on_job_is_done();
     private:
-        zmq::socket_t socket_;
+        liaison& liaison_;
     };
 }
 

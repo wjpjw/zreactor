@@ -9,6 +9,8 @@
 #include "wjp.h"
 #include <future>
 
+// stringstream的多线程表现非常差。连测试代码临时用用都会出问题。
+
 /*
  测试200个客户端，连续对proxy进行10次请求，形成潮涌。
  客户端测试线程会分别记录每次请求的回应消息与延时。
@@ -141,7 +143,7 @@ void test_200(){
 
 void test_tmp() {
     Vector<std::future<String>> tasks;
-    for(int task_id=0;task_id<120;task_id++)
+    for(int task_id=0;task_id<500;task_id++)
     {
         auto ten_requests=[task_id](){
             StringStream ss;

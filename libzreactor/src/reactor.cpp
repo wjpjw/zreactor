@@ -19,7 +19,7 @@ reactor::reactor(const std::string& port, callback cb, int nr_workerthreads, int
 
 void reactor::start() {
     liaison     liasion_   (context_, port_, callback_, nr_workerthreads_);
-    consignor   consignor_ (context_, CONSIGNOR_INPROC_NAME);
+    consignor   consignor_ (context_, CONSIGNOR_INPROC_NAME, liasion_);
     zmq_pollitem_t items[] = {
             {liasion_,   0, ZMQ_POLLIN, 0},
             {consignor_, 0, ZMQ_POLLIN, 0}
@@ -30,7 +30,7 @@ void reactor::start() {
             liasion_.on_request_msg_arrival();
         }
         if (items[1].revents & ZMQ_POLLIN) {
-            consignor_.on_response_msg_arrival();
+            consignor_.on_job_is_done();
         }
     }
 }

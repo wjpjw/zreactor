@@ -3,24 +3,34 @@
 //
 
 #include "consignor.h"
+#include "message.h"
+#include "liaison.h"
 
 using namespace wjp;
 
-consignor::consignor(zmq::context_t& context, const std::string& identifier)
-        :socket_(context, ZMQ_ROUTER)
+consignor::consignor(zmq::context_t& context, const std::string& identifier, liaison& liaison_)
+        :router_socket(context), liaison_(liaison_)
 {
-    socket_.bind("inproc://"+identifier);
+    bind_inproc(identifier);
 }
 
-//    Message message;
-//    socket.recv(&message);
-//    socket.recv(&message);
-//    socket.recv(&message);
-//    auto message_str=str(message); //message_str是addr和content拼起来的
-//    addr=message_str.substr(0,5);  //addr长度永远是5
-//    content=message_str.substr(5);
-
-void consignor::on_response_msg_arrival()
+/*
+    factory到consignor的dealer-router模式中的通信协议是自定义的。
+    消息格式如下：
+    |-- dealer_addr --|
+    |-- client addr --|
+    |--   result    --|
+    consignor不作应答，只forward。
+    这种设计比之前的消息拼接+根据addr长度取消息子序列的算法更可靠也更高效。
+ */
+void consignor::on_job_is_done()
 {
-
+    message client_addr, result;
+    client_addr.recv(socket_); // dealer_addr, obsolete in this case
+    client_addr.recv(socket_); // client_addr in the 2nd frame
+    result.recv(socket_);      // result in the 3rd frame
+#ifdef WJP_TEST
+    std::cout<<"client addr: "<<client_addr.str()<<" result: "<<result.str()<<std::endl;
+#endif
+    liaison_.send_to_req(client_addr, result);
 }

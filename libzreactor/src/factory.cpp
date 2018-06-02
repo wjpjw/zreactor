@@ -24,7 +24,7 @@ factory::factory(size_t nr_pipelines, callback callback_, zmq::context_t& contex
 : meta_(std::make_shared<meta>())
 {
     for (size_t i = 0; i < nr_pipelines; i++) {
-        std::thread([metaptr = meta_] {
+        std::thread([metaptr = meta_, &context, callback_] {
             std::unique_lock<std::mutex> lk(metaptr->mtx_);
             dealer_socket socket(context);
             socket.connect_inproc(CONSIGNOR_INPROC_NAME);
@@ -33,7 +33,9 @@ factory::factory(size_t nr_pipelines, callback callback_, zmq::context_t& contex
                     auto task = metaptr->tasks_.front();
                     metaptr->tasks_.pop();
                     lk.unlock();
-                    socket.send_to_router(callback_(task.addr_, task.content_));
+                    auto result=callback_(task.addr_, task.content_); 
+                    task.addr_.send(socket, ZMQ_SNDMORE);             
+                    result.send(socket);
                     lk.lock();
                 } else if (metaptr->is_shutdown_) {
                     break;
