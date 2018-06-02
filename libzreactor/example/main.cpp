@@ -5,6 +5,6 @@
 #include "zapi.h"
 
 int main() {
-
+    wjp::reactor{"5559", [](){}}.start();
     return 0;
 }

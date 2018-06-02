@@ -15,21 +15,21 @@ namespace wjp {
 
     class threadpool {
     public:
-        explicit threadpool(size_t thread_count) : data_(std::make_shared<data>()) {
-            for (size_t i = 0; i < thread_count; ++i) {
-                std::thread([dataptr = data_] {
-                    std::unique_lock<std::mutex> lk(dataptr->mtx_);
+        explicit threadpool(size_t nr_thread) : meta_(std::make_shared<meta>()) {
+            for (size_t i = 0; i < nr_thread; i++) {
+                std::thread([metaptr = meta_] {
+                    std::unique_lock<std::mutex> lk(metaptr->mtx_);
                     for (;;) {
-                        if (!dataptr->tasks_.empty()) {
-                            auto current = std::move(dataptr->tasks_.front());
-                            dataptr->tasks_.pop();
+                        if (!metaptr->tasks_.empty()) {
+                            auto current = std::move(metaptr->tasks_.front());
+                            metaptr->tasks_.pop();
                             lk.unlock();
                             current();
                             lk.lock();
-                        } else if (dataptr->is_shutdown_) {
+                        } else if (metaptr->is_shutdown_) {
                             break;
                         } else {
-                            dataptr->cond_.wait(lk);
+                            metaptr->cond_.wait(lk);
                         }
                     }
                 }).detach();
@@ -41,32 +41,33 @@ namespace wjp {
         threadpool(threadpool &&) = default;
 
         ~threadpool() {
-            if ((bool) data_) {
+            if ((bool) meta_) {
                 {
-                    std::lock_guard<std::mutex> lk(data_->mtx_);
-                    data_->is_shutdown_ = true;
+                    std::lock_guard<std::mutex> lk(meta_->mtx_);
+                    meta_->is_shutdown_ = true;
                 }
-                data_->cond_.notify_all();
+                meta_->cond_.notify_all();
             }
         }
 
         template<class F>
         void execute(F &&task) {
             {
-                std::lock_guard<std::mutex> lk(data_->mtx_);
-                data_->tasks_.emplace(std::forward<F>(task));
+                std::lock_guard<std::mutex> lk(meta_->mtx_);
+                meta_->tasks_.emplace(std::forward<F>(task));
             }
-            data_->cond_.notify_one();
+            meta_->cond_.notify_one();
         }
 
     private:
-        struct data {
+        struct meta {
             std::mutex mtx_;
             std::condition_variable cond_;
             bool is_shutdown_ = false;
             std::queue<std::function<void()>> tasks_;
         };
-        std::shared_ptr<data> data_;
+        std::shared_ptr<meta> meta_;
     };
 }
+
 #endif //DO_NOT_YARN_threadpool_H

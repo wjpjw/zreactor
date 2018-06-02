@@ -11,8 +11,6 @@ class SimpleRouterSocket {
 public:
     inline operator void* () noexcept { return socket; }
     SimpleRouterSocket(Context& context, int port);
-    void recvFromReq(String& addr, String& content);
-    void sendToReq(Message& addr, Message& content);
 private:
     Socket      socket;
     int         port;

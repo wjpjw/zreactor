@@ -26,8 +26,22 @@
     e) message有自己的send/recv方法，zmqcpp官方的封装里把这个功能放到socket里面去了，不合理。让数据流向服务，还是让服务流向数据，在重数据的场景下，显然后者更合理。
 
     这是我的得意之作，比官方的zmq.hpp里封得好用多了。
+    
+3. wjp::router_socket（对router类型的socket的封装）
 
-## 主要组件
+    router_socket支持和多个req_socket进行交互，其中router_socket是异步非阻塞的，req_socket则是同步阻塞的。
+    
+    router_socket也支持和多个router_socket进行交互，彼此都是异步非阻塞的。
+    
+    zreactor中的两大组件liaison和consignor都是router_socket的子类。
+    
+    通常来说组合比继承这种高耦合设计好，但这里用继承可以更明确地传递一个概念——liaison和consignor的本质是具备特殊功能的socket。用户在使用这个类时完全可以用组合不用继承。
+    
+4. wjp::dealer_socket（对dealer类型的socket的封装）
+    
+   dealer_socket目前只完成了和router_socket合作的功能。其他的通信模式还暂时用不到，以后有时间再将它完善。
+
+## zreactor的主要组件
 
 1. wjp::reactor（reactor模式的服务器）
 
@@ -42,14 +56,14 @@
 
 2. wjp::liaison（联络人）
      
-    liaison负责与客户端的req类型的socket交互。
+    liaison负责与客户端的req类型的socket交互。拿到客户请求后，交给factory处理，并不等待消息处理结果。factory异步处理完也只能再通过consignor通知liaison发回给客户端。
      
 
 3. wjp::consignor（交付人）
 
     consignor负责协调liaison和内部的核心工作组件factory。
     
-4. wjp::factory（消息处理工厂） 
+4. wjp::factory（多线程消息处理工厂） 
     
     factory的本质是一个更复杂的threadpool。它由多条流水线pipeline组成，每条流水线对应一个工作线程加一个router类型的socket（专门用来向consignor返回刚处理完的消息）。
     

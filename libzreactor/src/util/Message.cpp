@@ -2,7 +2,7 @@
 // Created by jipeng on 5/30/18.
 //
 
-#include "Message.h"
+#include "message.h"
 
 using namespace wjp;
 

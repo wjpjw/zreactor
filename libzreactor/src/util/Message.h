@@ -10,7 +10,7 @@
 /*
     三个设计目标：最优性能，最小接口，高易用性。
     使用时遵循下列原则：
-    1. 使用值语义，也就是说，请把wjp::message当基础类型来用。
+    1. 使用值语义，也就是说，请把wjp::message当基础类型来用，它只有一个shared指针那么大。
     2. 初始化数据的构造函数message(void*, size_t)要求用户提供堆中某个malloc出来的内存指针，并把这块内存的所有权转移给message。默认用free(data)的方式释放内存，所以不允许new，一定要用malloc。
     3. 数据生命周期由shared_ptr控制，如果一份数据无message持有，就会析构。
     4. 较小的数据没必要malloc，完全可以把栈中复制一次，效率反而更高，调用接口也更优雅。
@@ -45,6 +45,8 @@ namespace wjp {
         struct zmq_msg_autoclose;           // 配合shared_ptr，最后一个所有者析构时再真正析构zmq_msg
         std::shared_ptr<zmq_msg_autoclose> msgptr_;
     };
+
+    using callback=std::function<message(message,message)>;  // addr, content --> response
 
 
 #ifdef WJP_EXAMPLE
@@ -93,7 +95,6 @@ namespace wjp {
         auto hh=ss;
 
         // [4] send/recv 示例代码
-
         zmq::context_t ctx;
         zmq::socket_t Alice(ctx, ZMQ_REP);
         zmq::socket_t Bob(ctx, ZMQ_REQ);

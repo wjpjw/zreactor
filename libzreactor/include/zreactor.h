@@ -17,8 +17,6 @@
 
 namespace wjp{
 
-using callback=std::function<void()>;  // todo
-
 /* linux high resolution sleep */
 static inline void linux_sleep_msecs(int msecs) {
     struct timespec t;
