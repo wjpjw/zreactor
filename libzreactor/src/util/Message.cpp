@@ -25,7 +25,7 @@ message::message(size_t len) : msgptr_(std::make_shared<zmq_msg_autoclose>())
 
 message::message(void* data, size_t size) : msgptr_(std::make_shared<zmq_msg_autoclose>())
 {
-    auto dealloc=[](void* data, void* hint){std::cout<<"free!";free(data);};
+    auto dealloc=[](void* data, void* hint){free(data);};
     int rc = zmq_msg_init_data (&msgptr_->msg, data, size, dealloc, nullptr);
     if (rc != 0) throw zmq::error_t ();
 }

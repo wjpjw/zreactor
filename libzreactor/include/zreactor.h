@@ -14,7 +14,7 @@
 #include <functional>
 
 #define CONSIGNOR_INPROC_NAME "csgnr"  //in-process inter-thread communication identifier
-#define WJP_TEST
+//#define WJP_TEST
 
 namespace wjp{
 

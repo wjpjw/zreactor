@@ -157,7 +157,7 @@ void test_tmp() {
                 auto recvd = s_recv (requester);
                 ss << "Response No. "<< request_id << " [" << recvd << "] "
                    << linux_clock()-start<<"ms\n";
-                //linux_sleep_msecs(within(1000));
+                linux_sleep_msecs(within(1000));
             }
             return ss.str();
         };
