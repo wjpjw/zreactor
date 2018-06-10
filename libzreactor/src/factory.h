@@ -5,7 +5,7 @@
 #ifndef DO_NOT_YARN_FACTORY_H
 #define DO_NOT_YARN_FACTORY_H
 
-#include "zreactor.h"
+#include "wjp.h"
 #include "message.h"
 #include "dealer_socket.h"
 #include <queue>

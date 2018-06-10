@@ -2,38 +2,19 @@
 // Created by jipeng on 5/25/18.
 //
 
-#ifndef DO_NOT_YARN_ZREACTOR_H
-#define DO_NOT_YARN_ZREACTOR_H
+#pragma once
 
-/* almost commonly used headers */
-#include <zmq.hpp>
-#include <sys/time.h>
-#include <time.h>
-#include <iostream>
-#include <memory>
-#include <functional>
+//这个头文件会包含所有公开的接口，熟悉这个库的使用者也可以根据需求分开include。
 
-#define CONSIGNOR_INPROC_NAME "csgnr"  //in-process inter-thread communication identifier
-//#define WJP_TEST
+// 必要的共同头文件、常量、内联函数
+#include "zreactor.h"
 
-namespace wjp{
+// 通用网络库
+#include "../src/util/threadpool.h"
+#include "../src/util/message.h"
+#include "../src/util/router_socket.h"
+#include "../src/util/dealer_socket.h"
 
-/* linux high resolution sleep */
-static inline void linux_sleep_msecs(int msecs) {
-    struct timespec t;
-    t.tv_sec = msecs / 1000;
-    t.tv_nsec = (msecs % 1000) * 1000000;
-    nanosleep (&t, NULL);
-}
+// 高性能数据库访问代理
+#include "../src/reactor.h"
 
-/*  linux current time */
-static inline int64_t linux_clock() {
-    struct timeval tv;
-    gettimeofday (&tv, NULL);
-    return (int64_t) (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-}
-
-
-#endif //DO_NOT_YARN_ZREACTOR_H

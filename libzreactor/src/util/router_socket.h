@@ -5,7 +5,7 @@
 #ifndef DO_NOT_YARN_ROUTER_SOCKET_H
 #define DO_NOT_YARN_ROUTER_SOCKET_H
 
-#include "zreactor.h"
+#include "wjp.h"
 
 /*
    router_socket是对原生socket的包装，让它支持具体通信模式下的消息收发、连接绑定。

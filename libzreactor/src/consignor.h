@@ -5,7 +5,7 @@
 #ifndef DO_NOT_YARN_CONSIGNOR_H
 #define DO_NOT_YARN_CONSIGNOR_H
 
-#include "zreactor.h"
+#include "wjp.h"
 #include "router_socket.h"
 
 /*

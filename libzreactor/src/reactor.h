@@ -4,7 +4,7 @@
 
 #ifndef DO_NOT_YARN_POLLERSERVER_H
 #define DO_NOT_YARN_POLLERSERVER_H
-#include "zreactor.h"
+#include "wjp.h"
 #include "util/message.h"
 
 /*

@@ -5,7 +5,7 @@
 #ifndef DO_NOT_YARN_DEALER_SOCKET_H
 #define DO_NOT_YARN_DEALER_SOCKET_H
 
-#include "zreactor.h"
+#include "wjp.h"
 
 /*
     从dealer的视角来看，和router收发消息是很简单的，发content即可，router自然会收到id+content，

@@ -5,7 +5,7 @@
 #ifndef DO_NOT_YARN_MESSAGE_H
 #define DO_NOT_YARN_MESSAGE_H
 
-#include "zreactor.h"
+#include "wjp.h"
 
 /*
     三个设计目标：最优性能，最小接口，高易用性。
