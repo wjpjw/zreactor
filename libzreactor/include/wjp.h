@@ -9,6 +9,7 @@
 #include <iostream>
 #include <memory>
 #include <functional>
+#include <exception>
 
 #define CONSIGNOR_INPROC_NAME "csgnr"  //in-process inter-thread communication identifier
 //#define WJP_TEST
