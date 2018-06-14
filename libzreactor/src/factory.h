@@ -6,8 +6,8 @@
 #define DO_NOT_YARN_FACTORY_H
 
 #include "wjp.h"
-#include "message.h"
-#include "dealer_socket.h"
+#include "util/message.h"
+#include "util/dealer_socket.h"
 #include <queue>
 #include <mutex>
 #include <condition_variable>

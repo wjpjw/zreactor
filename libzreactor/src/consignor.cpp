@@ -3,8 +3,8 @@
 //
 
 #include "consignor.h"
-#include "message.h"
 #include "liaison.h"
+#include "util/message.h"
 
 using namespace wjp;
 
