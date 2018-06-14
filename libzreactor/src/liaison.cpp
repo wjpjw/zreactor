@@ -3,9 +3,7 @@
 //
 
 #include "liaison.h"
-#include "factory.h"
 #include "util/threadpool.h"
-#include "util/message.h"
 #include "util/router_socket.h"
 
 using namespace wjp;

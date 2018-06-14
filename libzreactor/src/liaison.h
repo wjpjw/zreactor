@@ -6,6 +6,9 @@
 #define DO_NOT_YARN_LIAISON_H
 
 #include "wjp.h"
+#include "util/message.h"
+#include "util/router_socket.h"
+#include "factory.h"
 
 /*
     liaison（联络人）
@@ -14,7 +17,6 @@
     每当clients的req类型socket发送请求过来，它就将这个请求递交给factory，让它决定怎么处理——放入某个工作线程异步执行或阻塞等待空闲的工作进程。
  */
 namespace wjp{
-    class factory;
     class liaison : public router_socket{
     public:
         liaison(zmq::context_t& context, const std::string& port, callback cb, int nr_threads);
