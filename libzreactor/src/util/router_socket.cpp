@@ -43,7 +43,7 @@ void router_socket::recv_from_req(message& addr, message& content)
 void router_socket::send_to_req(message addr, message content)
 {
     addr.send(socket_, ZMQ_SNDMORE);
-    message{(int)0}.send(socket_, ZMQ_SNDMORE);
+    message{(size_t)0}.send(socket_, ZMQ_SNDMORE);
     content.send(socket_);
 }
 

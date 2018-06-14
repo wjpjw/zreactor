@@ -24,7 +24,7 @@ namespace wjp {
     class message {
     public:
         message();                          // 这种初始化没设置长度，数据只允许来自recv()
-        message(size_t len);                // 设置好长度后，可直接操作data()指针指向的内存
+        explicit message(size_t len);       // 设置好长度后，可直接操作data()指针指向的内存
         message(const void*, size_t);       // 请慎重使用，虽然方便，但是有一次复制！size必须小于1KB。
         message(const char*);               // 用字符串初始化，有一次复制！len < 1024，否则报错！
         message(const std::string&);        // 同上！

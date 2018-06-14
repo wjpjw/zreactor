@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(zreactor)
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+include_directories(/usr/local/include)
+link_directories(/usr/local/lib)
+include_directories(${Boost_INCLUDE_DIRS})
 add_subdirectory(client)
 add_subdirectory(libzreactor)
-
