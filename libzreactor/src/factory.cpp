@@ -6,36 +6,28 @@
 
 using namespace wjp;
 
-struct factory::task{
-    task(message a, message c):addr_(a),content_(c){}
-    message addr_;
-    message content_;
-};
-
-
 struct factory::meta {
     std::mutex mtx_;
     std::condition_variable cond_;
     bool is_shutdown_ = false;
-    std::queue<task> tasks_;   //addr content
+    std::queue<std::shared_ptr<task>> tasks_;   //addr content
 };
 
-factory::factory(size_t nr_pipelines, callback callback_, zmq::context_t& context)
+//注意，之前把callback&作为捕获对象放在thread函数内执行，效率不如从队列中pop出来的。很有可能相同std::function对象的operator()访问是加锁的。总之如果有data race，避免lambda捕获其引用或指针。
+factory::factory(size_t nr_pipelines, zmq::context_t& context)
 : meta_(std::make_shared<meta>())
 {
     for (size_t i = 0; i < nr_pipelines; i++) {
-        std::thread([metaptr = meta_, &context, callback_] {
+        std::thread([metaptr = meta_, &context] {
             std::unique_lock<std::mutex> lk(metaptr->mtx_);
             dealer_socket socket(context);
             socket.connect_inproc(CONSIGNOR_INPROC_NAME);
             for (;;) {
                 if (!metaptr->tasks_.empty()) {
-                    auto task = metaptr->tasks_.front();
+                    auto task_ = metaptr->tasks_.front();
                     metaptr->tasks_.pop();
                     lk.unlock();
-                    auto result=callback_(task.addr_, task.content_); 
-                    task.addr_.send(socket, ZMQ_SNDMORE);             
-                    result.send(socket);
+                    task_->run(socket);    
                     lk.lock();
                 } else if (metaptr->is_shutdown_) {
                     break;
@@ -58,11 +50,11 @@ factory::~factory() {
     }
 }
 
-void factory::process(message addr, message content)
+void factory::process(std::shared_ptr<task> task_)
 {
     {
         std::lock_guard<std::mutex> lk(meta_->mtx_);
-        meta_->tasks_.emplace(addr, content);
+        meta_->tasks_.emplace(task_);
     }
     meta_->cond_.notify_one();
 }

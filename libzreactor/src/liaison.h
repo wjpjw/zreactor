@@ -24,6 +24,7 @@ namespace wjp{
     private:
         std::unique_ptr<factory>    factory_;   //消息处理工厂的唯一联系人
         zmq::context_t&             context_;   //进程唯一的ctx
+        callback                    cb_;
     };
 
 }

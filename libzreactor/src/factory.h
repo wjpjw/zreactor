@@ -13,7 +13,7 @@
 #include <condition_variable>
 #include <functional>
 #include <thread>
-
+#include "eventloop/task.h"
 
 /*
     基于mutex的多线程任务队列
@@ -26,10 +26,9 @@ namespace wjp {
     class factory {
     public:
         ~factory();
-        factory(size_t nr_pipelines, callback callback_, zmq::context_t& context);
-        void process(message addr, message content);
+        factory(size_t nr_pipelines, zmq::context_t& context);
+        void process(std::shared_ptr<task> task_);
     private:
-        struct task;
         struct meta;
         std::shared_ptr<meta> meta_;
     };

@@ -5,12 +5,14 @@
 #include "liaison.h"
 #include "util/threadpool.h"
 #include "util/router_socket.h"
+#include "eventloop/task.h"
 
 using namespace wjp;
 
 liaison::liaison(zmq::context_t& context, const std::string& port, callback cb, int nr_threads)
         :router_socket(context),
-         factory_(std::make_unique<factory>(nr_threads, cb, context)),
+         factory_(std::make_unique<factory>(nr_threads, context)),
+         cb_(cb),
          context_(context)
 {
     bind_tcp(port);
@@ -21,6 +23,6 @@ void liaison::on_request_msg_arrival()
 {
     message addr, content;
     recv_from_req(addr, content);
-    factory_->process(addr, content);
+    factory_->process(std::make_shared<client_task>(addr, content, cb_));
 }
 

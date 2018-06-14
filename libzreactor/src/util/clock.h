@@ -14,7 +14,7 @@ namespace wjp{
     using time_point = std::chrono::high_resolution_clock::time_point;
     static inline void sleep(int ms)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(msec));
+        std::this_thread::sleep_for(std::chrono::milliseconds(ms));
     }
 
     static inline std::chrono::high_resolution_clock::time_point now()

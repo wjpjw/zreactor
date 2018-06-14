@@ -46,7 +46,6 @@ namespace wjp {
         std::shared_ptr<zmq_msg_autoclose> msgptr_;
     };
 
-    using callback=std::function<message(message,message)>;  // addr, content --> response
 
 
 #ifdef WJP_EXAMPLE
