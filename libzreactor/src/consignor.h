@@ -21,7 +21,7 @@ namespace wjp {
         consignor(zmq::context_t&, const std::string&, liaison&);
         void on_job_is_done();
     private:
-        liaison& liaison_;
+        liaison& liaison_; 
     };
 }
 
