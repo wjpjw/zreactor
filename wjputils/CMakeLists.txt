@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5)
+project(wjputils)
+set(CMAKE_CXX_STANDARD 14)
+aux_source_directory(. DIRSRCS)
+add_executable(wjputils-test ${DIRSRCS})
+target_link_libraries(wjputils-test pthread)
