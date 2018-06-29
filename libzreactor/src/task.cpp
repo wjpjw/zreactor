@@ -1,5 +1,5 @@
 #include "task.h"
-#include "../util/dealer_socket.h"
+#include "./util/dealer_socket.h"
 using namespace wjp;
 
 timer_task::timer_task(timer t) 
@@ -11,6 +11,7 @@ void timer_task::run(dealer_socket&)
     timer_.exec();
 }
 
+/*====================================================================*/
 
 client_task::client_task(message addr, message content, callback cb) 
                  :  addr_(addr), 

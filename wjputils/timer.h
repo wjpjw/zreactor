@@ -1,6 +1,6 @@
 #pragma once
 #include "wjp.h"
-#include "../util/clock.h"
+#include "clock.h"
 
 namespace wjp{
 /*支持ms精度的计时器。*/

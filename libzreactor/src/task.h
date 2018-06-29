@@ -1,6 +1,6 @@
 #pragma once
 #include "wjp.h"
-#include "../util/message.h"
+#include "./util/message.h"
 #include "timer.h"
 namespace wjp{
 class dealer_socket;

@@ -1,0 +1,38 @@
+-- The C compiler identification is GNU 7.3.0
+-- The CXX compiler identification is GNU 7.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/wjp/projects/zreactor/build
+Scanning dependencies of target client
+[  6%] Building CXX object client/CMakeFiles/client.dir/main.cpp.o
+[ 12%] Linking CXX executable client
+[ 12%] Built target client
+Scanning dependencies of target util
+[ 18%] Building CXX object libzreactor/src/util/CMakeFiles/util.dir/dealer_socket.cpp.o
+[ 25%] Building CXX object libzreactor/src/util/CMakeFiles/util.dir/message.cpp.o
+[ 31%] Building CXX object libzreactor/src/util/CMakeFiles/util.dir/router_socket.cpp.o
+[ 37%] Linking CXX static library libutil.a
+[ 37%] Built target util
+Scanning dependencies of target zreactor
+[ 43%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/consignor.cpp.o
+[ 50%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/factory.cpp.o
+[ 56%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/liaison.cpp.o
+[ 62%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/reactor.cpp.o
+[ 68%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/task.cpp.o
+[ 75%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/timer.cpp.o
+[ 81%] Building CXX object libzreactor/src/CMakeFiles/zreactor.dir/timerhub.cpp.o
+libzreactor/src/CMakeFiles/zreactor.dir/build.make:206: recipe for target 'libzreactor/src/CMakeFiles/zreactor.dir/timerhub.cpp.o' failed
+CMakeFiles/Makefile2:163: recipe for target 'libzreactor/src/CMakeFiles/zreactor.dir/all' failed
+Makefile:83: recipe for target 'all' failed

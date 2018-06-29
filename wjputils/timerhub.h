@@ -1,6 +1,6 @@
 #pragma once
 #include "wjp.h"
-#include "../util/clock.h"
+#include "clock.h"
 namespace wjp
 {
 class timer;    

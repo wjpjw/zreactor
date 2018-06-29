@@ -41,15 +41,6 @@ namespace wjp{
     {
         return std::chrono::duration_cast<std::chrono::milliseconds>(now() - start).count();
     }
-    static inline timespec timespec_from_now(time_point future_time)
-    {
-        int64_t microseconds=std::chrono::duration_cast<std::chrono::milliseconds>(future_time-now()).count();
-        if (microseconds < 100) microseconds = 100;
-        struct timespec ts;
-        ts.tv_sec = static_cast<time_t>(microseconds / 1000000);
-        ts.tv_nsec = static_cast<long>((microseconds % 1000000) * 1000);
-        return ts;
-    }
 }
 
 #endif //ZREACTOR_CLOCK_H
